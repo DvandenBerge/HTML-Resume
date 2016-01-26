@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -37,7 +32,6 @@ public class HelloController extends HttpServlet {
             String name=request.getParameter("username");
             String responseMsg="Hello "+name+", isn't java great?";
             request.setAttribute("myMsg",responseMsg);
-            
             RequestDispatcher view=request.getRequestDispatcher("/helloResponse.jsp");
             view.forward(request,response);
         }catch(Exception e){
@@ -57,7 +51,17 @@ public class HelloController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            String age=request.getParameter("age");
+            String responseMsg="You are age "+age+" years old!";
+            request.setAttribute("myMsg",responseMsg);
+            
+            RequestDispatcher view=request.getRequestDispatcher("/helloResponse.jsp");
+            view.forward(request,response);
+        }catch(Exception e){
+            request.setAttribute("errorMsg", e.getMessage());
+        }
     }
 
     /**
@@ -71,7 +75,7 @@ public class HelloController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request,response);
     }
 
     /**
